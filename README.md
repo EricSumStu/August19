@@ -15,3 +15,4 @@ i am your leader Fred is a fraud
 Meabh
 i am your leader Fred is a fraud
 Fred
+vote fred to not be scrum master
