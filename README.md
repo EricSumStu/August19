@@ -18,3 +18,4 @@ i am your leader Fred is a fraud
 Meabh
 i am your leader Fred is a fraud
 Fred
+give fred a chance
