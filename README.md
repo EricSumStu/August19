@@ -3,3 +3,4 @@ test
 Paddy 
 Fred out 
 Meabh
+Eoin is the real scrum master
