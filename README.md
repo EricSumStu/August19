@@ -18,5 +18,4 @@ i am your leader Fred is a fraud
 Meabh
 i am your leader Fred is a fraud
 Fred
-
-Hi guys Fred here please respect my authority thanks
+give fred a chance
