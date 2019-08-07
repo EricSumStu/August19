@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TrackMyHours</string>
+    <string name="StartButtonText">Start Timer</string>
+    </resources>
