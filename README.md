@@ -1,6 +1,8 @@
 # August19
 test
 Paddy
+James
+feidhlim 
 Fiona
 James 
 Nathan
@@ -11,8 +13,11 @@ Fred out
 FIONN
 Meabh
 Eoin is the real scrum master
+Fred
 i am your leader Fred is a fraud
 Meabh
 i am your leader Fred is a fraud
 Fred
 vote fred to not be scrum master
+give fred a chance
+
