@@ -10,7 +10,9 @@ James
 siofra
 Paddy 
 Fred out 
+Eoin is the real scrum master
+Fred
+i am your leader Fred is a fraud
 Meabh
-Eoin is the real scrum master
-Eoin is the real scrum master
+i am your leader Fred is a fraud
 Fred
