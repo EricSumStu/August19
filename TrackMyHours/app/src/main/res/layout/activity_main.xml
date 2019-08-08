@@ -8,18 +8,32 @@
     android:orientation="vertical"
     android:gravity="center">
 
-<Chronometer
-android:id="@+id/chronometer"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:textSize="30sp" />
-
-    <Button
+    <Chronometer
+        android:id="@+id/chronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="startStopChronometer"
+        android:textColor="@android:color/black"
+        android:textSize="52sp" />
+
+    <Button
         android:id="@+id/startButton"
-    android:text="@string/StartButtonText"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="startStopChronometer"
+        android:text="@string/StartButtonText"
+        android:textColor="@android:color/black" />
+
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="resetChronometer"
+        android:text="@string/finish_work_text"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
 
 
     </LinearLayout>
