@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TrackMyHours</string>
     <string name="StartButtonText">Start Timer</string>
-    </resources>
+    <string name="finish_work_text">Finish Work and Reset</string>
+</resources>
