@@ -20,6 +20,7 @@
         android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#00BCD4"
         android:onClick="startStopChronometer"
         android:text="@string/StartButtonText"
         android:textColor="@android:color/black" />
@@ -29,6 +30,7 @@
         android:id="@+id/resetButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#00BCD4"
         android:onClick="resetChronometer"
         android:text="@string/finish_work_text"
         android:textColor="@android:color/black"
