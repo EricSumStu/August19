@@ -2,6 +2,7 @@ package com.example.trackmyhours;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -11,10 +12,12 @@ import android.widget.Chronometer;
 
 
 public class MainActivity extends AppCompatActivity {
+
+
     private Chronometer chronometer;
     private long pauseOffset;
-    private boolean running;
     private Button mButtonStart;
+    private boolean running;
     private Button mButtonReset;
 
 
@@ -22,14 +25,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("%s");
         chronometer.setBase(SystemClock.elapsedRealtime());
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
     }
-
 
 
 
