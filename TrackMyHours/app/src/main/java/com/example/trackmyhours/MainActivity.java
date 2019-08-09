@@ -14,6 +14,9 @@ public class MainActivity extends AppCompatActivity {
     private Chronometer chronometer;
     private long pauseOffset;
     private boolean running;
+    private Button mButtonStart;
+    private Button mButtonReset;
+
 
 
     @Override
@@ -23,33 +26,67 @@ public class MainActivity extends AppCompatActivity {
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("%s");
         chronometer.setBase(SystemClock.elapsedRealtime());
-        Button btn = (Button) findViewById(R.id.startButton);
+
+
     }
 
 
 
+
+
+
     public void startStopChronometer(View v) {
-        Button btn1 = (Button) findViewById(R.id.startButton);
+        mButtonStart = findViewById(R.id.startButton);
+        mButtonReset = findViewById(R.id.resetButton);
         if (!running) {
-           btn1.setText("Stop Timer");
+//
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
             running = true;
-
+//
+            updateButtons();
 
         }
-        //Stop button
+
         else {
-           btn1.setText("Start Timer");
+
 
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
 
-        }
+            updateButtons();
+    }
 
     }
-}
+    public void resetChronometer(View v) {
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        pauseOffset = 0;
+
+        chronometer.stop();
+        running = false;
+
+        updateButtons();
+
+
+    }
+
+
+    private void updateButtons(){
+    if (running){
+        mButtonReset.setVisibility(View.VISIBLE);
+        mButtonStart.setText("Pause Timer");
+    }
+    else {
+        mButtonStart.setText("Start Timer");
+        mButtonReset.setVisibility(View.INVISIBLE);
+    }
+
+    }
+
+    }
+
+
 
 
 
