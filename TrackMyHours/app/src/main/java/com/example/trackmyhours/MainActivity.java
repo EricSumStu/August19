@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             running = false;
 
             updateButtons();
-    }
+        }
 
     }
     public void resetChronometer(View v) {
@@ -76,25 +76,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void updateButtons(){
-    if (running){
-        mButtonReset.setVisibility(View.VISIBLE);
-        mButtonStart.setText("Pause Timer");
-    }
-    else {
-        mButtonStart.setText("Start Timer");
-        mButtonReset.setVisibility(View.INVISIBLE);
-    }
+        if (running){
+            mButtonReset.setVisibility(View.VISIBLE);
+            mButtonStart.setText("Pause Timer");
+        }
+        else {
+            mButtonStart.setText("Start Timer");
+            mButtonReset.setVisibility(View.INVISIBLE);
+        }
 
     }
 
-    }
-
-
-
-
-
-
-
-
-
-
+}
