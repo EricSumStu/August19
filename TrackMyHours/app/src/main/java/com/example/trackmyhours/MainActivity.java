@@ -2,6 +2,7 @@ package com.example.trackmyhours;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -85,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
             mButtonReset.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    public void goToReport (View view){
+        Intent intent = new Intent (this, Report.class);
+        startActivity(intent);
     }
 
 }

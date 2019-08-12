@@ -2,4 +2,20 @@
     <string name="app_name">TrackMyHours</string>
     <string name="StartButtonText">Start Timer</string>
     <string name="finish_work_text">Finish Work and Reset</string>
+
+        <string name="day_prompt">Number of days</string>
+
+        <string-array name="day_arrays">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+            <item>5</item>
+            <item>6</item>
+            <item>7</item>
+            <item>8</item>
+            <item>9</item>
+            <item>10</item>
+        </string-array>
+
 </resources>
