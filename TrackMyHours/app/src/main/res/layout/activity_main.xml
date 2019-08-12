@@ -76,7 +76,7 @@
         android:layout_marginTop="8dp"
         android:onClick="goToReport"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/ic_format_list_bulleted_black_24dp"
+        android:drawableStart="@drawable/ic_format_list_bulleted_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
