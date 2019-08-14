@@ -11,6 +11,15 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mButtonStart;
     private boolean running;
     private Button mButtonReset;
+
 
 
 
@@ -65,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public void resetChronometer(View v) {
         showElapsedTime();
-
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
 
@@ -73,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         running = false;
 
         updateButtons();
-
 
     }
 
@@ -89,12 +97,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    private void showElapsedTime() {
+    public String showElapsedTime() {
         long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-        long elapsedSeconds = elapsedMillis/1000;
-        Toast.makeText(MainActivity.this, "Elapsed seconds: " + elapsedSeconds,
+        int h = (int) (elapsedMillis/ 3600000);
+        int m = (int) (elapsedMillis - h * 3600000) / 60000;
+        int s = (int) (elapsedMillis - (h * 3600000 ) - (m * 60000)) / 1000;
+        String totalWorkingHours = (h < 10 ? "0"+h: h)+":"+(m < 10 ? "0"+m: m)+":"+ (s < 10 ? "0"+s: s);
+        Toast.makeText(MainActivity.this, "Total Time Worked: " + totalWorkingHours,
                 Toast.LENGTH_LONG).show();
+     return totalWorkingHours;
     }
+
 
     public void goToReport (View view){
         Intent intent = new Intent (this, Report.class);
