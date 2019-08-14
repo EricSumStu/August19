@@ -9,7 +9,7 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
-
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void resetChronometer(View v) {
+        showElapsedTime();
+
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
 
@@ -86,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
             mButtonReset.setVisibility(View.INVISIBLE);
         }
 
+    }
+    private void showElapsedTime() {
+        long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+        long elapsedSeconds = elapsedMillis/1000;
+        Toast.makeText(MainActivity.this, "Elapsed seconds: " + elapsedSeconds,
+                Toast.LENGTH_LONG).show();
     }
 
     public void goToReport (View view){
