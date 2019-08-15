@@ -45,7 +45,9 @@
         android:text="@string/noOfDays"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,9 +28,10 @@ public class Report extends AppCompatActivity {
             final TextView rowTextView = new TextView(this);
 
             // set some properties of rowTextView or something
-            
+            rowTextView.setTextSize(20);
+
             // rowTextView.setText("Date: 3rd Aug\n" + "Working hours: " + "00:00:00\n\n");
-            rowTextView.setText(Html.fromHtml("<u>Date:</u> 3rd Aug <br> <u>Working hours: </u> 00:00:00<br><br>"));
+            rowTextView.setText(Html.fromHtml("<u>Date:</u> 3rd Aug <br> <u>Working hours:</u> 00:00:00<br> <u>Lunch:</u> 00:00:00 <br> <u>Other breaks:</u> 00:00:00 <br>___________________________________<br> "));
             // add the textview to the linearlayout
             linearLayout.addView(rowTextView);
 
