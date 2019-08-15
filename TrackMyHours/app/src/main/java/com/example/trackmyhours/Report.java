@@ -29,7 +29,7 @@ public class Report extends AppCompatActivity {
             // set some properties of rowTextView or something
             
             // rowTextView.setText("Date: 3rd Aug\n" + "Working hours: " + "00:00:00\n\n");
-            rowTextView.setText(Html.fromHtml("<u>Date:</u> 3rd Aug <br> <u>Working hours: </u> 00:00:00<br><br>"));
+            rowTextView.setText(Html.fromHtml("<u>Date:</u> 15th Aug <br> <u>Working hours: </u> 00:00:00<br><br>"));
             // add the textview to the linearlayout
             linearLayout.addView(rowTextView);
 
