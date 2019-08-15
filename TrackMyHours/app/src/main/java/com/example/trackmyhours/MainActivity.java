@@ -30,10 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static final String FILE_NAME = "example.txt" ;
+    private Chronometer lunchChronometer;
     private Chronometer chronometer;
     private long pauseOffset;
+    private long lunchPauseOffset;
     private Button mButtonStart;
     private boolean running;
+    private boolean lunchRunning;
     private Button mButtonReset;
 
 
@@ -46,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("%s");
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        lunchChronometer = findViewById(R.id.lunchChronometer);
+        lunchChronometer.setFormat("%s");
         chronometer.setBase(SystemClock.elapsedRealtime());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -60,46 +66,101 @@ public class MainActivity extends AppCompatActivity {
         mButtonReset = findViewById(R.id.resetButton);
         if (!running) {
 //
-            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+/*            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
             running = true;
             load(v);
+            updateButtons();*/
+            startMainChronometer(v);
             updateButtons();
-
         }
 
         else {
+   /*         String time = showElapsedTime();*/
 
-
-            chronometer.stop();
+/*            chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-            running = false;
-
+            running = false;*/
+/*            resetMainChronometer(v);*/
+            resetAllChronometers(v);
             updateButtons();
+/*            save(v, time );*/
         }
 
     }
-    public void resetChronometer(View v) {
-        String time = showElapsedTime();
+    public void resetAllChronometers(View v) {
+        String time = showElapsedTime();/*
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        pauseOffset = 0;
+
+        chronometer.stop();
+        running = false;*/
+        resetMainChronometer(v);
+        resetLunchChronometer(v);
+        updateButtons();
+        mButtonReset.setVisibility(View.INVISIBLE);
+        save(v, time );
+    }
+
+    public void lunchButtonHandler(View v) {
+        if (!lunchRunning) {
+            pauseMainChronometer(v);
+            startLunchChronometer(v);
+
+        }
+        else{
+            pauseLunchChronometer(v);
+            startMainChronometer(v);
+        }
+
+    }
+    public void startMainChronometer(View v) {
+        chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+        chronometer.start();
+        running = true;
+    }
+
+    public void pauseMainChronometer(View v) {
+        chronometer.stop();
+        pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+        running = false;
+    }
+
+    public void resetMainChronometer(View v) {
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
 
         chronometer.stop();
         running = false;
-
-        updateButtons();
-        save(v, time );
     }
 
+    public void startLunchChronometer(View v) {
+        lunchChronometer.setBase(SystemClock.elapsedRealtime() - lunchPauseOffset);
+        lunchChronometer.start();
+        lunchRunning = true;
+    }
 
+    public void pauseLunchChronometer (View v) {
+        lunchChronometer.stop();
+        lunchPauseOffset = SystemClock.elapsedRealtime() - lunchChronometer.getBase();
+        lunchRunning = false;
+    }
+
+    public void resetLunchChronometer (View v) {
+        lunchChronometer.setBase(SystemClock.elapsedRealtime());
+        lunchPauseOffset = 0;
+
+        lunchChronometer.stop();
+        lunchRunning = false;
+    }
     private void updateButtons(){
         if (running){
             mButtonReset.setVisibility(View.VISIBLE);
-            mButtonStart.setText("Pause Timer");
+            mButtonStart.setText("Finish Work and Reset");
         }
         else {
-            mButtonStart.setText("Start Timer");
-            mButtonReset.setVisibility(View.INVISIBLE);
+            mButtonStart.setText("Start Working Time");
+            mButtonReset.setVisibility(View.VISIBLE);
         }
 
     }

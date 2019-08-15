@@ -11,9 +11,9 @@
 
 
     <LinearLayout
-       
-        android:layout_width="358dp"
-        android:layout_height="202dp"
+
+        android:layout_width="342dp"
+        android:layout_height="443dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -24,7 +24,20 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Chronometer
-            android:id="@+id/chronometer"
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/black"
+        android:textSize="60sp" />
+
+        <Chronometer
+            android:id="@+id/lunchChronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -60,7 +73,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:background="#00BCD4"
-            android:onClick="resetChronometer"
+            android:onClick="lunchButtonHandler"
             android:text="@string/finish_work_text"
             android:textColor="@android:color/black"
             android:visibility="invisible"
