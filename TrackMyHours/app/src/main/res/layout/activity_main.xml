@@ -70,13 +70,13 @@
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="39dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:onClick="goToReport"
         android:background="@android:color/transparent"
         android:drawableStart="@drawable/ic_format_list_bulleted_black_24dp"
+        android:onClick="goToReport"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
