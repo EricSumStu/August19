@@ -10,7 +10,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Report extends AppCompatActivity {
+
+    public static final String FILE_NAME = "new.txt" ;
 
 
     @Override
@@ -18,29 +26,82 @@ public class Report extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
-        final int N = 10; // total number of textviews to add
-
-        final TextView[] myTextViews = new TextView[N]; // create an empty array;
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
 
-        for (int i = 0; i < N; i++) {
-            // create a new textview
-            final TextView rowTextView = new TextView(this);
+        FileInputStream fis = null;
 
-            // set some properties of rowTextView or something
-            rowTextView.setTextSize(20);
+        try {
+            fis = openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
 
-            // rowTextView.setText("Date: 3rd Aug\n" + "Working hours: " + "00:00:00\n\n");
+            while ((text = br.readLine()) != null) {
+                final TextView rowTextView = new TextView(this);
+                rowTextView.setTextSize(20);
+                String[] textArray = text.split(" ");
+                String date = textArray[0];
+                String working = textArray[1];
 
-            rowTextView.setText(Html.fromHtml("<u>Date:</u> 15th Aug <br> <u>Working hours:</u> 00:00:00<br> <u>Lunch:</u> 00:00:00 <br> <u>Other breaks:</u> 00:00:00 <br>___________________________________<br> "));
+                rowTextView.setText(Html.fromHtml("<u>" + text + "</u>"));
+                linearLayout.addView(rowTextView);
 
-            // add the textview to the linearlayout
-            linearLayout.addView(rowTextView);
+                sb.append(text).append("\n");
+            }
 
-            // save a reference to the textview for later
-            myTextViews[i] = rowTextView;
+
+            System.out.println(sb);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
+
+
+    public void load() {
+        FileInputStream fis = null;
+
+        try {
+            fis = openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+
+            while ((text = br.readLine()) != null) {
+                sb.append(text).append("\n");
+            }
+
+            System.out.println(sb);
+/*             textView = findViewById(R.id.reading);
+            textView.setText(sb.toString());*/
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
     public void goToMainActivity (View view){
         Intent intent = new Intent (this, MainActivity.class);

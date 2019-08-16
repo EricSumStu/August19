@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class MainActivity extends AppCompatActivity {
 
 
-    public static final String FILE_NAME = "example.txt" ;
+    public static final String FILE_NAME = "new.txt" ;
     private Chronometer lunchChronometer;
     private Chronometer chronometer;
     private long pauseOffset;
@@ -180,9 +180,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream(new File(getFilesDir() + "/" + "example.txt"), true));
+            PrintWriter writer = new PrintWriter(new FileOutputStream(new File(getFilesDir() + "/" + "new.txt"), true));
             String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-            String row = "Day " + date + " : [Working Hours: " + elapsedTime + "] " ;
+            String row =  date + " " +  elapsedTime;
             writer.println(row);
             writer.close();
             Toast.makeText(this, "Saved to " + getFilesDir() + "/" + MainActivity.FILE_NAME,
@@ -194,36 +194,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void load(View v) {
-        FileInputStream fis = null;
-
-        try {
-            fis = openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
-            
-            while ((text = br.readLine()) != null) {
-                sb.append(text).append("\n");
-            }
-/*             textView = findViewById(R.id.reading);
-            textView.setText(sb.toString());*/
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
 
 
