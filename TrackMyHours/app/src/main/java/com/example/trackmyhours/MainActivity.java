@@ -106,12 +106,14 @@ public class MainActivity extends AppCompatActivity {
         if (!lunchRunning) {
             pauseMainChronometer(v);
             startLunchChronometer(v);
-
+        mButtonReset.setText("Stop Lunch");
         }
         else{
             pauseLunchChronometer(v);
             startMainChronometer(v);
+        mButtonReset.setText("Start Lunch");
         }
+
 
     }
     public void startMainChronometer(View v) {
