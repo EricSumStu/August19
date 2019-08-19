@@ -32,12 +32,16 @@ public class MainActivity extends AppCompatActivity {
     public static final String FILE_NAME = "new.txt";
     private Chronometer lunchChronometer;
     private Chronometer chronometer;
+    private Chronometer breakChronometer;
     private long pauseOffset;
     private long lunchPauseOffset;
+    private long breakPauseOffset;
     private Button mButtonStart;
+    private Button mBreakButton;
     private boolean running;
     private boolean lunchRunning;
-    private Button mButtonReset;
+    private boolean breakRunning;
+    private Button mLunchButton;
 
 
     @Override
@@ -50,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         chronometer.setBase(SystemClock.elapsedRealtime());
         lunchChronometer = findViewById(R.id.lunchChronometer);
         lunchChronometer.setFormat("%s");
-        chronometer.setBase(SystemClock.elapsedRealtime());
+        breakChronometer = findViewById(R.id.breakChronometer);
+        breakChronometer.setFormat("%s");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
     }
@@ -58,8 +63,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void startStopChronometer(View v) {
         mButtonStart = findViewById(R.id.startButton);
-        mButtonReset = findViewById(R.id.resetButton);
-        if (!running) {
+        mLunchButton = findViewById(R.id.resetButton);
+        mBreakButton = findViewById(R.id.breakButton);
+        if (lunchRunning) {
+            Toast.makeText(MainActivity.this, "Please finish lunch before finishing work",
+                    Toast.LENGTH_LONG).show();
+
+        }
+        else if (breakRunning) {
+            Toast.makeText(MainActivity.this, "Please finish your break before finishing work",
+                    Toast.LENGTH_LONG).show();
+        }
+        else if (!running) {
 //
 /*            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
@@ -67,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
             load(v);
             updateButtons();*/
             startMainChronometer(v);
-            updateButtons();
+            mButtonStart.setText("Finish Work and Reset");
+            mLunchButton.setVisibility(View.VISIBLE);
+            mBreakButton.setVisibility(View.VISIBLE);
         } else {
             /*         String time = showElapsedTime();*/
 
@@ -76,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
             running = false;*/
             /*            resetMainChronometer(v);*/
             resetAllChronometers(v);
-            updateButtons();
+            mButtonStart.setText("Start Working Time");
+            mLunchButton.setVisibility(View.INVISIBLE);
+            mBreakButton.setVisibility(View.INVISIBLE);
             /*            save(v, time );*/
         }
 
@@ -85,25 +104,49 @@ public class MainActivity extends AppCompatActivity {
     public void resetAllChronometers(View v) {
         String time = showElapsedTime();
         String lunchTime = calculateLunchTime();
+        String breakTime = calculateBreakTime();
         resetMainChronometer(v);
         resetLunchChronometer(v);
+        resetBreakChronometer(v);
         updateButtons();
-        mButtonReset.setVisibility(View.INVISIBLE);
-        save(v, time, lunchTime);
+     /*   mButtonReset.setVisibility(View.INVISIBLE);*/
+        save(v, time, lunchTime, breakTime);
     }
 
     public void lunchButtonHandler(View v) {
-        if (!lunchRunning) {
+        if (breakRunning){
+            Toast.makeText(MainActivity.this, "Please finish your break before starting lunch",
+                    Toast.LENGTH_LONG).show();
+        }
+        else if (!lunchRunning) {
             pauseMainChronometer(v);
             startLunchChronometer(v);
-            mButtonReset.setText("Stop Lunch");
+            mLunchButton.setText("Stop Lunch");
         } else {
             pauseLunchChronometer(v);
             startMainChronometer(v);
-            mButtonReset.setText("Start Lunch");
+            mLunchButton.setText("Start Lunch");
         }
 
 
+    }
+
+    public void breakButtonHandler(View v) {
+        if (lunchRunning) {
+            Toast.makeText(MainActivity.this, "Please finish lunch before starting a break",
+                    Toast.LENGTH_LONG).show();
+        }
+        else if (!breakRunning) {
+            pauseMainChronometer(v);
+            startBreakChronometer(v);
+            mBreakButton.setText("Finish Break");
+
+        }
+        else {
+            pauseBreakChronometer(v);
+            startMainChronometer(v);
+            mBreakButton.setText("Start Break");
+        }
     }
 
     public void startMainChronometer(View v) {
@@ -146,13 +189,33 @@ public class MainActivity extends AppCompatActivity {
         lunchRunning = false;
     }
 
+    public void startBreakChronometer(View v) {
+        breakChronometer.setBase(SystemClock.elapsedRealtime() - breakPauseOffset);
+        breakChronometer.start();
+        breakRunning = true;
+    }
+
+    public void pauseBreakChronometer(View v) {
+        breakChronometer.stop();
+        breakPauseOffset = SystemClock.elapsedRealtime() - breakChronometer.getBase();
+        breakRunning = false;
+    }
+
+    public void resetBreakChronometer(View v) {
+        breakChronometer.setBase(SystemClock.elapsedRealtime());
+        breakPauseOffset = 0;
+
+        breakChronometer.stop();
+        breakRunning = false;
+    }
+
     private void updateButtons() {
         if (running) {
-            mButtonReset.setVisibility(View.VISIBLE);
+
             mButtonStart.setText("Finish Work and Reset");
         } else {
             mButtonStart.setText("Start Working Time");
-            mButtonReset.setVisibility(View.VISIBLE);
+
         }
 
     }
@@ -176,14 +239,22 @@ public class MainActivity extends AppCompatActivity {
         String totalLunchHours = (hLunch < 10 ? "0" + hLunch : hLunch) + ":" + (mLunch < 10 ? "0" + mLunch : mLunch) + ":" + (sLunch < 10 ? "0" + sLunch : sLunch);
         return totalLunchHours;
     }
+    public String calculateBreakTime() {
+        long breakElapsedMillis = SystemClock.elapsedRealtime() - breakChronometer.getBase();
+        int hBreak = (int) (breakElapsedMillis / 3600000);
+        int mBreak = (int) (breakElapsedMillis - hBreak * 3600000) / 60000;
+        int sBreak = (int) (breakElapsedMillis - (hBreak * 3600000) - (mBreak * 60000)) / 1000;
+        String totalBreakHours = (hBreak < 10 ? "0" + hBreak : hBreak) + ":" + (mBreak < 10 ? "0" + mBreak : mBreak) + ":" + (sBreak < 10 ? "0" + sBreak : sBreak);
+        return totalBreakHours;
+    }
 
-    public void save(View v, String elapsedTime, String elapsedLunchTime) {
+    public void save(View v, String elapsedTime, String elapsedLunchTime, String elapsedBreakTime) {
 
 
         try {
             PrintWriter writer = new PrintWriter(new FileOutputStream(new File(getFilesDir() + "/" + "new.txt"), true));
             String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-            String row = date + "  Total Working Time: " + elapsedTime + " Time spent on lunch: " + elapsedLunchTime;
+            String row = date + "  Total Working Time: " + elapsedTime + " Time spent on lunch: " + elapsedLunchTime + "Time spent on breaks: " + elapsedBreakTime;
             writer.println(row);
             writer.close();
             Toast.makeText(this, "Saved to " + getFilesDir() + "/" + MainActivity.FILE_NAME,
