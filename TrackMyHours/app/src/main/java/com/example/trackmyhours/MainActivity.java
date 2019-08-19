@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class MainActivity extends AppCompatActivity {
 
 
-    public static final String FILE_NAME = "new.txt" ;
+    public static final String FILE_NAME = "new.txt";
     private Chronometer lunchChronometer;
     private Chronometer chronometer;
     private long pauseOffset;
@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean running;
     private boolean lunchRunning;
     private Button mButtonReset;
-
-
 
 
     @Override
@@ -58,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
     public void startStopChronometer(View v) {
         mButtonStart = findViewById(R.id.startButton);
         mButtonReset = findViewById(R.id.resetButton);
@@ -73,49 +68,44 @@ public class MainActivity extends AppCompatActivity {
             updateButtons();*/
             startMainChronometer(v);
             updateButtons();
-        }
-
-        else {
-   /*         String time = showElapsedTime();*/
+        } else {
+            /*         String time = showElapsedTime();*/
 
 /*            chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;*/
-/*            resetMainChronometer(v);*/
+            /*            resetMainChronometer(v);*/
             resetAllChronometers(v);
             updateButtons();
-/*            save(v, time );*/
+            /*            save(v, time );*/
         }
 
     }
-    public void resetAllChronometers(View v) {
-        String time = showElapsedTime();/*
-        chronometer.setBase(SystemClock.elapsedRealtime());
-        pauseOffset = 0;
 
-        chronometer.stop();
-        running = false;*/
+    public void resetAllChronometers(View v) {
+        String time = showElapsedTime();
+        String lunchTime = calculateLunchTime();
         resetMainChronometer(v);
         resetLunchChronometer(v);
         updateButtons();
         mButtonReset.setVisibility(View.INVISIBLE);
-        save(v, time );
+        save(v, time, lunchTime);
     }
 
     public void lunchButtonHandler(View v) {
         if (!lunchRunning) {
             pauseMainChronometer(v);
             startLunchChronometer(v);
-        mButtonReset.setText("Stop Lunch");
-        }
-        else{
+            mButtonReset.setText("Stop Lunch");
+        } else {
             pauseLunchChronometer(v);
             startMainChronometer(v);
-        mButtonReset.setText("Start Lunch");
+            mButtonReset.setText("Start Lunch");
         }
 
 
     }
+
     public void startMainChronometer(View v) {
         chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
         chronometer.start();
@@ -142,47 +132,58 @@ public class MainActivity extends AppCompatActivity {
         lunchRunning = true;
     }
 
-    public void pauseLunchChronometer (View v) {
+    public void pauseLunchChronometer(View v) {
         lunchChronometer.stop();
         lunchPauseOffset = SystemClock.elapsedRealtime() - lunchChronometer.getBase();
         lunchRunning = false;
     }
 
-    public void resetLunchChronometer (View v) {
+    public void resetLunchChronometer(View v) {
         lunchChronometer.setBase(SystemClock.elapsedRealtime());
         lunchPauseOffset = 0;
 
         lunchChronometer.stop();
         lunchRunning = false;
     }
-    private void updateButtons(){
-        if (running){
+
+    private void updateButtons() {
+        if (running) {
             mButtonReset.setVisibility(View.VISIBLE);
             mButtonStart.setText("Finish Work and Reset");
-        }
-        else {
+        } else {
             mButtonStart.setText("Start Working Time");
             mButtonReset.setVisibility(View.VISIBLE);
         }
 
     }
+
     public String showElapsedTime() {
         long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-        int h = (int) (elapsedMillis/ 3600000);
+        int h = (int) (elapsedMillis / 3600000);
         int m = (int) (elapsedMillis - h * 3600000) / 60000;
-        int s = (int) (elapsedMillis - (h * 3600000 ) - (m * 60000)) / 1000;
-        String totalWorkingHours = (h < 10 ? "0"+h: h)+":"+(m < 10 ? "0"+m: m)+":"+ (s < 10 ? "0"+s: s);
+        int s = (int) (elapsedMillis - (h * 3600000) - (m * 60000)) / 1000;
+        String totalWorkingHours = (h < 10 ? "0" + h : h) + ":" + (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
         Toast.makeText(MainActivity.this, "Total Time Worked: " + totalWorkingHours,
                 Toast.LENGTH_LONG).show();
-     return totalWorkingHours;
+        return totalWorkingHours;
     }
-    public void save(View v, String elapsedTime) {
+
+    public String calculateLunchTime() {
+        long lunchElapsedMillis = SystemClock.elapsedRealtime() - lunchChronometer.getBase();
+        int hLunch = (int) (lunchElapsedMillis / 3600000);
+        int mLunch = (int) (lunchElapsedMillis - hLunch * 3600000) / 60000;
+        int sLunch = (int) (lunchElapsedMillis - (hLunch * 3600000) - (mLunch * 60000)) / 1000;
+        String totalLunchHours = (hLunch < 10 ? "0" + hLunch : hLunch) + ":" + (mLunch < 10 ? "0" + mLunch : mLunch) + ":" + (sLunch < 10 ? "0" + sLunch : sLunch);
+        return totalLunchHours;
+    }
+
+    public void save(View v, String elapsedTime, String elapsedLunchTime) {
 
 
         try {
             PrintWriter writer = new PrintWriter(new FileOutputStream(new File(getFilesDir() + "/" + "new.txt"), true));
             String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-            String row =  date + " " +  elapsedTime;
+            String row = date + "  Total Working Time: " + elapsedTime + " Time spent on lunch: " + elapsedLunchTime;
             writer.println(row);
             writer.close();
             Toast.makeText(this, "Saved to " + getFilesDir() + "/" + MainActivity.FILE_NAME,
@@ -194,14 +195,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-            public void goToReport (View view){
-        Intent intent = new Intent (this, Report.class);
+    public void goToReport(View view) {
+        Intent intent = new Intent(this, Report.class);
         startActivity(intent);
     }
-
-
 }
