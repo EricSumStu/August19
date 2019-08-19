@@ -62,15 +62,16 @@ public class Report extends AppCompatActivity {
                 String date = textArray[0];
                 String working = textArray[1];
 
+
                 rowTextView.setText(Html.fromHtml("<u>Date: </u>" + date + "<br> <u>Working hours: </u>" + working + "<br> _____________________________<br>"));
                 linearLayout.addView(rowTextView);
 
-                sb.append(text).append("\n");
-                innerCounter++;
-            }
-
 
             System.out.println(sb);
+
+            sb.append(text).append("\n");
+            innerCounter++;
+        }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

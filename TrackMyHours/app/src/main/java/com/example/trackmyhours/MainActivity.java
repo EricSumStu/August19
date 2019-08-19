@@ -267,7 +267,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void goToReport(View view) {
-        Intent intent = new Intent(this, Report.class);
-        startActivity(intent);
+        if (running) {
+            Toast.makeText(MainActivity.this, "Please finish work before viewing stats",
+                    Toast.LENGTH_LONG).show();
+        } else if (lunchRunning) {
+            Toast.makeText(MainActivity.this, "Please finish work before viewing stats",
+                    Toast.LENGTH_LONG).show();
+        } else if (breakRunning) {
+            Toast.makeText(MainActivity.this, "Please finish work before viewing stats",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(this, Report.class);
+            startActivity(intent);
+        }
     }
 }
