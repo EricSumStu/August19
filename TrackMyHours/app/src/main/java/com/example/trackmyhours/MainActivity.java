@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             PrintWriter writer = new PrintWriter(new FileOutputStream(new File(getFilesDir() + "/" + "new.txt"), true));
             String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-            String row = date + "  Total Working Time: " + elapsedTime + " Time spent on lunch: " + elapsedLunchTime + "Time spent on breaks: " + elapsedBreakTime;
+            String row = date + " " + elapsedTime + " " + elapsedLunchTime + " " + elapsedBreakTime;
             writer.println(row);
             writer.close();
             Toast.makeText(this, "Saved to " + getFilesDir() + "/" + MainActivity.FILE_NAME,
