@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean lunchRunning;
     private boolean breakRunning;
     private Button mLunchButton;
+    private TextView lunchDescriptor;
+    private TextView breakDescriptor;
 
 
     @Override
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         mButtonStart = findViewById(R.id.startButton);
         mLunchButton = findViewById(R.id.resetButton);
         mBreakButton = findViewById(R.id.breakButton);
+        lunchDescriptor = findViewById(R.id.lunchChronometer_text_description);
+        breakDescriptor = findViewById(R.id.breakChronometer_text_description);
         if (lunchRunning) {
             Toast.makeText(MainActivity.this, "Please finish lunch before finishing work",
                     Toast.LENGTH_LONG).show();
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             mButtonStart.setText("Finish Work and Reset");
             mLunchButton.setVisibility(View.VISIBLE);
             mBreakButton.setVisibility(View.VISIBLE);
+            otherTimersAppear();
         } else {
             /*         String time = showElapsedTime();*/
 
@@ -96,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             mButtonStart.setText("Start Working Time");
             mLunchButton.setVisibility(View.INVISIBLE);
             mBreakButton.setVisibility(View.INVISIBLE);
+            otherTimersDisappear();
             /*            save(v, time );*/
         }
 
@@ -280,5 +286,18 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, Report.class);
             startActivity(intent);
         }
+    }
+
+    public void otherTimersAppear() {
+        lunchDescriptor.setVisibility(View.VISIBLE);
+        breakDescriptor.setVisibility(View.VISIBLE);
+        lunchChronometer.setVisibility(View.VISIBLE);
+        breakChronometer.setVisibility(View.VISIBLE);
+    }
+    public void otherTimersDisappear() {
+        lunchDescriptor.setVisibility(View.INVISIBLE);
+        breakDescriptor.setVisibility(View.INVISIBLE);
+        lunchChronometer.setVisibility(View.INVISIBLE);
+        breakChronometer.setVisibility(View.INVISIBLE);
     }
 }
