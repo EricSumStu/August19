@@ -56,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
         chronometer.setBase(SystemClock.elapsedRealtime());
         lunchChronometer = findViewById(R.id.lunchChronometer);
         lunchChronometer.setFormat("%s");
+        lunchChronometer.setBase(SystemClock.elapsedRealtime());
         breakChronometer = findViewById(R.id.breakChronometer);
         breakChronometer.setFormat("%s");
+        breakChronometer.setBase(SystemClock.elapsedRealtime());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
     }
@@ -238,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String calculateLunchTime() {
+        lunchChronometer.setBase(SystemClock.elapsedRealtime() - lunchPauseOffset);
         long lunchElapsedMillis = SystemClock.elapsedRealtime() - lunchChronometer.getBase();
         int hLunch = (int) (lunchElapsedMillis / 3600000);
         int mLunch = (int) (lunchElapsedMillis - hLunch * 3600000) / 60000;
@@ -246,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
         return totalLunchHours;
     }
     public String calculateBreakTime() {
+        breakChronometer.setBase(SystemClock.elapsedRealtime() - breakPauseOffset);
         long breakElapsedMillis = SystemClock.elapsedRealtime() - breakChronometer.getBase();
         int hBreak = (int) (breakElapsedMillis / 3600000);
         int mBreak = (int) (breakElapsedMillis - hBreak * 3600000) / 60000;

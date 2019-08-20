@@ -61,9 +61,11 @@ public class Report extends AppCompatActivity {
                 String[] textArray = text.split(" ");
                 String date = textArray[0];
                 String working = textArray[1];
+                String lunch = textArray[2];
+                String breakTime = textArray[3];
 
 
-                rowTextView.setText(Html.fromHtml("<u>Date: </u>" + date + "<br> <u>Working hours: </u>" + working + "<br> _____________________________<br>"));
+                rowTextView.setText(Html.fromHtml("<u>Date: </u>" + date + "<br> <u>Working hours: </u>" + working +  "<br> <u>Time spent on lunch: </u>" + lunch + "<br> <u>Time spent on breaks: </u>" + breakTime + "<br>_____________________________<br>"));
                 linearLayout.addView(rowTextView);
 
 
