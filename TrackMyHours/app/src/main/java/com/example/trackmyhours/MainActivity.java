@@ -1,7 +1,9 @@
 package com.example.trackmyhours;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView breakDescriptor;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
         breakChronometer.setBase(SystemClock.elapsedRealtime());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+
+
     }
 
 
-    public void startStopChronometer(View v) {
+    public void startStopChronometer(final View v) {
         mButtonStart = findViewById(R.id.startButton);
         mLunchButton = findViewById(R.id.resetButton);
         mBreakButton = findViewById(R.id.breakButton);
@@ -93,21 +99,47 @@ public class MainActivity extends AppCompatActivity {
             mBreakButton.setVisibility(View.VISIBLE);
             otherTimersAppear();
         } else {
-            /*         String time = showElapsedTime();*/
 
-/*            chronometer.stop();
-            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-            running = false;*/
-            /*            resetMainChronometer(v);*/
-            resetAllChronometers(v);
+/*            resetAllChronometers(v);
             mButtonStart.setText("Start Working Time");
             mLunchButton.setVisibility(View.INVISIBLE);
             mBreakButton.setVisibility(View.INVISIBLE);
-            otherTimersDisappear();
-            /*            save(v, time );*/
+            otherTimersDisappear();*/
+            AlertDialog.Builder  builder = new AlertDialog.Builder(this)
+                    .setTitle("Finish Work")
+                    .setMessage("Are you sure you want to finish work for the day? The timers will be reset and the output saved to the file")
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                           resetAndSaveOutput(v);
+
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, null);
+
+            AlertDialog areYouSure = builder.create();
+            areYouSure.show();
+                }
+
+
+
+
+
         }
 
+
+    public void resetAndSaveOutput(View v) {
+        resetAllChronometers(v);
+        mButtonStart.setText("Start Working Time");
+        mLunchButton.setVisibility(View.INVISIBLE);
+        mBreakButton.setVisibility(View.INVISIBLE);
+        otherTimersDisappear();
     }
+
 
     public void resetAllChronometers(View v) {
         String time = showElapsedTime();

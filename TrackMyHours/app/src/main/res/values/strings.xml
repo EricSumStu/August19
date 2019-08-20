@@ -4,6 +4,8 @@
     <string name="finish_work_text">Start Lunch</string>
     <string name="break_button_text">Start Break</string>
     <string name="noOfDays">Number of days:</string>
+    <string name="ok">OK:</string>
+    <string name="cancel">cancel</string>
     <string name="go">Go</string>
 
         <string name="day_prompt">Number of days</string>
