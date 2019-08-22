@@ -87,12 +87,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
         else if (!running) {
-//
-/*            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-            chronometer.start();
-            running = true;
-            load(v);
-            updateButtons();*/
             startMainChronometer(v);
             mButtonStart.setText("Finish Work and Reset");
             mLunchButton.setVisibility(View.VISIBLE);
@@ -100,15 +94,9 @@ public class MainActivity extends AppCompatActivity {
             otherTimersAppear();
         } else {
 
-/*            resetAllChronometers(v);
-            mButtonStart.setText("Start Working Time");
-            mLunchButton.setVisibility(View.INVISIBLE);
-            mBreakButton.setVisibility(View.INVISIBLE);
-            otherTimersDisappear();*/
             AlertDialog.Builder  builder = new AlertDialog.Builder(this)
                     .setTitle("Finish Work")
-                    .setMessage("Are you sure you want to finish work for the day? The timers will be reset and the output saved to the file")
-
+                    .setMessage("Are you sure you want to finish work for the day and reset the timer?")
                     // Specifying a listener allows you to take an action before dismissing the dialog.
                     // The dialog is automatically dismissed when a dialog button is clicked.
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -149,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
         resetLunchChronometer(v);
         resetBreakChronometer(v);
         updateButtons();
-     /*   mButtonReset.setVisibility(View.INVISIBLE);*/
         save(v, time, lunchTime, breakTime);
     }
 
