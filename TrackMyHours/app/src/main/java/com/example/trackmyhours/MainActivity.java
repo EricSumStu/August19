@@ -308,6 +308,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, Report.class);
             startActivity(intent);
+
         }
     }
 

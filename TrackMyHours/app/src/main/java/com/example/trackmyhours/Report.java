@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class Report extends AppCompatActivity {
 
-    public static final String FILE_NAME = "new.txt" ;
+    public static final String FILE_NAME = "new.txt";
 
 
     @Override
@@ -34,7 +34,7 @@ public class Report extends AppCompatActivity {
         readDataFromFile(spinnerValueInt);
     }
 
-    public void reDrawTiles(View v){
+    public void reDrawTiles(View v) {
         Spinner mySpinner = (Spinner) findViewById(R.id.spinner2);
         String spinnerValue = mySpinner.getSelectedItem().toString();
         int spinnerValueInt = Integer.parseInt(spinnerValue);
@@ -70,21 +70,20 @@ public class Report extends AppCompatActivity {
                 dataArrayList.add(dataObj);
 
 
+                System.out.println(sb);
 
-
-            System.out.println(sb);
-
-            sb.append(text).append("\n");
-            /*innerCounter++*/;
-        }
-            for(int i =dataArrayList.size()-1; dataArrayList.size()>=counter ? i >=dataArrayList.size()-counter:i>=0; i--){
+                sb.append(text).append("\n");
+                /*innerCounter++*/
+                ;
+            }
+            for (int i = dataArrayList.size() - 1; dataArrayList.size() >= counter ? i >= dataArrayList.size() - counter : i >= 0; i--) {
                 final TextView rowTextView = new TextView(this);
                 rowTextView.setTextSize(20);
                 String workingHours = dataArrayList.get(i).getWorkingHours();
                 String breakHours = dataArrayList.get(i).getBreakHours();
                 String lunchHours = dataArrayList.get(i).getLunchHours();
                 String date = dataArrayList.get(i).getDate();
-                rowTextView.setText(Html.fromHtml("<u>Date: </u>" + date + "<br> <u>Working hours: </u>" + workingHours +  "<br> <u>Time spent on lunch: </u>" + lunchHours + "<br> <u>Time spent on breaks: </u>" + breakHours + "<br>_____________________________<br>"));
+                rowTextView.setText(Html.fromHtml("<u>Date: </u>" + date + "<br> <u>Working hours: </u>" + workingHours + "<br> <u>Time spent on lunch: </u>" + lunchHours + "<br> <u>Time spent on breaks: </u>" + breakHours + "<br>_____________________________<br>"));
                 linearLayout.addView(rowTextView);
             }
         } catch (FileNotFoundException e) {
@@ -101,6 +100,64 @@ public class Report extends AppCompatActivity {
             }
         }
     }
+    public void viewAllHandler(View view) {
+        readAllData();
+    }
+    private void readAllData(){
+
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        linearLayout.removeAllViews();
+        FileInputStream fis = null;
+
+        try {
+            fis = openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+            int innerCounter = 0;
+            ArrayList<Data> dataArrayList = new ArrayList<>();
+
+
+            while ((text = br.readLine()) != null /*&& innerCounter < counter*/) {
+                final TextView rowTextView = new TextView(this);
+                rowTextView.setTextSize(20);
+                String[] textArray = text.split(" ");
+                String date = textArray[0];
+                String working = textArray[1];
+                String lunch = textArray[2];
+                String breakTime = textArray[3];
+                Data dataObj = new Data(working, lunch, breakTime, date);
+                dataArrayList.add(dataObj);
+
+            }
+
+            for(int i = dataArrayList.size()-1; i>=0; i-- ){
+                final TextView rowTextView = new TextView(this);
+                rowTextView.setTextSize(20);
+                String workingHours = dataArrayList.get(i).getWorkingHours();
+                String breakHours = dataArrayList.get(i).getBreakHours();
+                String lunchHours = dataArrayList.get(i).getLunchHours();
+                String date = dataArrayList.get(i).getDate();
+                rowTextView.setText(Html.fromHtml("<u>Date: </u>" + date + "<br> <u>Working hours: </u>" + workingHours + "<br> <u>Time spent on lunch: </u>" + lunchHours + "<br> <u>Time spent on breaks: </u>" + breakHours + "<br>_____________________________<br>"));
+                linearLayout.addView(rowTextView);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
 
     /*public void load() {
