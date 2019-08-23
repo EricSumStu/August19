@@ -324,4 +324,10 @@ public class MainActivity extends AppCompatActivity {
         lunchChronometer.setVisibility(View.INVISIBLE);
         breakChronometer.setVisibility(View.INVISIBLE);
     }
+
+
+
 }
+
+
+
