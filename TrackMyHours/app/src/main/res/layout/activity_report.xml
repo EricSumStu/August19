@@ -106,7 +106,7 @@
         android:layout_marginRight="16dp"
         android:background="#00BCD4"
         android:onClick="viewAllHandler"
-        android:text="View All"
+        android:text="@string/view_all"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
