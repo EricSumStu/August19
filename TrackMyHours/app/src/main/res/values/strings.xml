@@ -7,6 +7,7 @@
     <string name="ok">OK:</string>
     <string name="cancel">cancel</string>
     <string name="go">Go</string>
+    <string name="view_all">View all</string>
 
         <string name="day_prompt">Number of days</string>
 
